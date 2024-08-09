@@ -1,0 +1,35 @@
+{
+  "name": "activity-graph",
+  "version": "0.0.1",
+  "description": "TODO",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "check": "npm run lint:fix && npm run format && npm run typecheck && npm run test",
+    "dev": "web-dev-server --node-resolve --watch --port 8080",
+    "format": "prettier --config .prettierrc.js --write --cache .",
+    "format:check": "prettier --config .prettierrc.js --check .",
+    "lint": "eslint -c config/eslint.config.js --ignore-pattern .wrangler/",
+    "lint:fix": "eslint -c config/eslint.config.js --ignore-pattern .wrangler/ --fix",
+    "test": "node --test \"src/**/*.test.js\"",
+    "test:watch": "node --test --watch \"src/**/*.test.js\"",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "@types/node": "^22.0.0",
+    "@web/dev-server": "^0.4.6",
+    "eslint": "^9.8.0",
+    "prettier": "3.3.3",
+    "prettier-plugin-organize-imports": "^4.0.0",
+    "typescript": "^5.5.4"
+  },
+  "volta": {
+    "node": "22.6.0"
+  }
+}
