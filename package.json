@@ -4,6 +4,7 @@
   "description": "TODO",
   "license": "MIT",
   "type": "module",
+  "main": "src/activity-graph.js",
   "files": [
     "src"
   ],
@@ -19,6 +20,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "lit": "^3.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
