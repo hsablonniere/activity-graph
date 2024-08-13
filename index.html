@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="data:image/x-icon;," />
+    <title>activity-graph Web Component demo</title>
+    <style>
+      body {
+        font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+        margin: 2em 1em;
+      }
+    </style>
+    <link rel="stylesheet" href="themes/github.css" />
+    <link rel="stylesheet" href="themes/serializd.css" />
+    <link rel="stylesheet" href="themes/monkeytype.css" />
+    <link rel="stylesheet" href="themes/letterboxd.css" />
+    <script type="module" src="./src/activity-graph.js"></script>
+    <script type="module">
+      {
+        const githubContributions = await fetch('./data/github-contributions.json').then((r) => r.json());
+        document.querySelector('activity-graph.github').data = githubContributions;
+      }
+
+      {
+        const serializdColors = [
+          '#181c20',
+          'rgba(13, 148, 136, 0.4)',
+          'rgba(13, 148, 136, 0.6)',
+          'rgba(13, 148, 136, 0.6)',
+          'rgba(13, 148, 136, 0.8)',
+          'rgba(13, 148, 136, 0.8)',
+          'rgba(13, 148, 136, 1)',
+        ];
+
+        const serializdDiary = await fetch('./data/serializd-diary.json')
+          .then((r) => r.json())
+          .then((rawData) => {
+            return Object.fromEntries(
+              Object.entries(rawData).map(([dateString, episodes]) => {
+                const episodeList = episodes.map((ep) => {
+                  const season = ep.seasonNumber.toString().padStart(2, '0');
+                  const episode = ep.episodeNumber.toString().padStart(2, '0');
+                  return `- ${ep.show} s${season}e${episode}`;
+                });
+                const config = {
+                  style: { backgroundColor: serializdColors[Math.min(episodes.length, 6)] },
+                  title: dateString + ':\n' + episodeList.join('\n'),
+                };
+                return [dateString, config];
+              }),
+            );
+          });
+        document.querySelector('activity-graph.serializd').data = serializdDiary;
+      }
+
+      {
+        const monkeytypeColors = ['#323437', '#50492b', '#877322', '#b4951b', '#e2b714'];
+
+        const monkeytypeData = await fetch('./data/monkeytype-data.json')
+          .then((r) => r.json())
+          .then((rawData) => {
+            return Object.fromEntries(
+              Object.entries(rawData).map(([dateString, data]) => {
+                const config = {
+                  style: { backgroundColor: monkeytypeColors[data.level] },
+                  title: `${data.tests} tests on ${dateString}`,
+                };
+                return [dateString, config];
+              }),
+            );
+          });
+        document.querySelector('activity-graph.monkeytype').data = monkeytypeData;
+      }
+
+      {
+        const letterboxdDiary = await fetch('./data/letterboxd-diary.json')
+          .then((r) => r.json())
+          .then((rawData) => {
+            return Object.fromEntries(
+              Object.entries(rawData).map(([dateString, movies]) => {
+                const config = {
+                  style: { backgroundColor: '#00e054', opacity: Math.min((movies.length + 1) / 4, 1) },
+                  title: dateString + ':\n' + movies.map((movieTitle) => `- ${movieTitle}`).join('\n'),
+                };
+                return [dateString, config];
+              }),
+            );
+          });
+        document.querySelector('activity-graph.letterboxd').data = letterboxdDiary;
+      }
+    </script>
+  </head>
+  <body>
+    <h1>
+      <code style="background-color: #eee; padding: 0.1em 0.25em; border-radius: 0.25em">&lt;activity-graph&gt;</code>
+      Web component demo
+    </h1>
+
+    <h2>2023 GitHub contributions</h2>
+    <activity-graph
+      class="github"
+      weekday-headers="short"
+      month-limits="late"
+      lang="en"
+      start-date="2023-01-01"
+      end-date="2023-12-31"
+    ></activity-graph>
+
+    <h2>2024 Serializd diary</h2>
+    <activity-graph
+      class="serializd"
+      weekday-headers="short"
+      month-headers="short"
+      month-limits="late"
+      start-date="2024-01-01"
+      end-date="2024-08-13"
+    ></activity-graph>
+
+    <h2>2023 Monkeytype</h2>
+    <activity-graph
+      class="monkeytype"
+      weekday-headers="long"
+      month-headers="short"
+      month-limits="late"
+    ></activity-graph>
+
+    <h2>2023 Letterboxd diary</h2>
+    <activity-graph
+      class="letterboxd"
+      weekday-headers="short"
+      month-headers="short"
+      month-limits="late"
+      start-date="2023-01-01"
+      end-date="2023-12-31"
+    ></activity-graph>
+  </body>
+</html>

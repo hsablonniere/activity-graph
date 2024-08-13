@@ -1,0 +1,43 @@
+activity-graph.monkeytype {
+  --height: 16px;
+  --width: 17.6px;
+  background-color: #2c2e31;
+  border-radius: 0.5em;
+  color: #646669;
+  display: inline-grid;
+  font-family: 'Roboto Mono', 'Roboto Mono', 'Vazirmatn', monospace;
+  gap: 0.275em;
+  padding: 1.5em;
+}
+
+activity-graph.monkeytype::part(weekday-header),
+activity-graph.monkeytype::part(month-header) {
+  text-transform: lowercase;
+}
+
+activity-graph.monkeytype::part(weekday-header),
+activity-graph.monkeytype::part(day) {
+  height: var(--height);
+  line-height: var(--height);
+}
+
+activity-graph.monkeytype::part(weekday-header) {
+  margin-right: 2rem;
+}
+
+activity-graph.monkeytype::part(weekday-header--even) {
+  display: none;
+}
+
+activity-graph.monkeytype::part(month-header) {
+  text-align: center;
+}
+
+activity-graph.monkeytype::part(day) {
+  border-radius: 0.275em;
+  width: var(--width);
+}
+
+activity-graph.monkeytype::part(day--nodata) {
+  background-color: #323437;
+}

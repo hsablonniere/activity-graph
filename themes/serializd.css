@@ -1,0 +1,33 @@
+activity-graph.serializd {
+  --height: 20px;
+  background-color: #0d0f12;
+  color: #fff;
+  display: inline-grid;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji';
+  gap: 1px;
+  padding: 1em;
+}
+
+activity-graph.serializd::part(weekday-header),
+activity-graph.serializd::part(month-header) {
+  font-size: 12px;
+}
+
+activity-graph.serializd::part(weekday-header),
+activity-graph.serializd::part(day) {
+  height: var(--height);
+  line-height: var(--height);
+}
+
+activity-graph.serializd::part(weekday-header) {
+  padding-right: 5px;
+}
+
+activity-graph.serializd::part(day) {
+  width: var(--height);
+}
+
+activity-graph.serializd::part(day--nodata) {
+  background-color: #181c20;
+}

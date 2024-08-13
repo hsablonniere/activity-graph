@@ -1,0 +1,45 @@
+activity-graph.github {
+  --height: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji';
+  gap: 3px;
+  border: 1px solid #d0d7de;
+  border-radius: 0.375em;
+  padding: 1em;
+  display: inline-grid;
+}
+
+activity-graph.github::part(weekday-header),
+activity-graph.github::part(month-header) {
+  font-size: 12px;
+}
+
+activity-graph.github::part(weekday-header),
+activity-graph.github::part(day) {
+  height: var(--height);
+  line-height: var(--height);
+}
+
+activity-graph.github::part(weekday-header) {
+  padding-right: 0.25em;
+}
+
+activity-graph.github::part(weekday-header--even) {
+  display: none;
+}
+
+activity-graph.github::part(month-header) {
+  height: 13px;
+  line-height: 13px;
+}
+
+activity-graph.github::part(day) {
+  border-radius: 2px;
+  outline-offset: -1px;
+  outline: 1px solid #1b1f230f;
+  width: var(--height);
+}
+
+activity-graph.github::part(day--nodata) {
+  background-color: #ebedf0;
+}
