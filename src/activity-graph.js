@@ -86,7 +86,7 @@ export class ActivityGraph extends LitElement {
     return Array.from({ length: 7 }).map((_, nbDays) => {
       const shift = nbDays - this.startDate.getDay() + this.weekStartDay;
       const date = this.startDate.addDays(shift);
-      const text = date.formatWeekday(this.lang, weekdayHeaderFormat);
+      const text = date.toLocaleDateString(this.lang, { weekday: weekdayHeaderFormat });
 
       const isEvenMonth = date.getDay(this.weekStartDay) % 2 === 0;
       const parts = ['weekday-header', isEvenMonth ? 'weekday-header--even' : 'weekday-header--odd'];
@@ -96,7 +96,7 @@ export class ActivityGraph extends LitElement {
         gridColumnEnd: 'span 2',
       };
 
-      return html`<div part=${shadowPartAttribute(parts)} style=${styleMap(style)}>${text}</div>`;
+      return html` <div part=${shadowPartAttribute(parts)} style=${styleMap(style)}>${text}</div>`;
     });
   }
 
@@ -140,7 +140,7 @@ export class ActivityGraph extends LitElement {
         if (firstMonthSlice?.index !== index) {
           return nothing;
         }
-        const monthName = firstMonthSlice.date.formatMonth(this.lang, monthHeaderFormat);
+        const monthName = firstMonthSlice.date.toLocaleDateString(this.lang, { month: monthHeaderFormat });
         const rawWeekStart = firstMonthSlice.index;
         const rawWeekEnd = rawWeekStart + currentMonthSlices.length;
         const style = {
@@ -148,7 +148,7 @@ export class ActivityGraph extends LitElement {
           gridColumnStart: this.#roundMonthLimit(rawWeekStart) + columnShift,
           gridColumnEnd: this.#roundMonthLimit(rawWeekEnd) + columnShift,
         };
-        return html`<div part="month-header" style=${styleMap(style)}>${monthName}</div>`;
+        return html` <div part="month-header" style=${styleMap(style)}>${monthName}</div>`;
       });
   }
 

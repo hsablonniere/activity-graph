@@ -64,26 +64,6 @@ export class IsoDate extends Date {
   toString() {
     return this.toISOString().substring(0, 10);
   }
-
-  /**
-   * @param {string} lang
-   * @param {WeekdayHeaderFormat} weekdayHeaderFormat
-   * @return {string}
-   */
-  formatWeekday(lang, weekdayHeaderFormat) {
-    const formatter = new Intl.DateTimeFormat(lang, { weekday: weekdayHeaderFormat });
-    return formatter.format(this);
-  }
-
-  /**
-   * @param {string} lang
-   * @param {MonthHeaderFormat} monthHeaderFormat
-   * @return {string}
-   */
-  formatMonth(lang, monthHeaderFormat) {
-    const monthFormatter = new Intl.DateTimeFormat(lang, { month: monthHeaderFormat });
-    return monthFormatter.format(this);
-  }
 }
 
 export const isoDateAttributePropertyConverter = {
