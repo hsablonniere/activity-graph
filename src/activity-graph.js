@@ -36,7 +36,7 @@ export class ActivityGraph extends LitElement {
     this.endDate = new IsoDate();
 
     /** @type {string} */
-    this.lang = document?.querySelector('html')?.lang || 'en';
+    this.lang = globalThis.document?.querySelector('html')?.lang || 'en';
 
     /** @type {'none' | MonthHeaderFormat } */
     this.monthHeaders = 'short';
@@ -203,4 +203,4 @@ export class ActivityGraph extends LitElement {
   }
 }
 
-window.customElements.define('activity-graph', ActivityGraph);
+customElements.define('activity-graph', ActivityGraph);
