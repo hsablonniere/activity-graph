@@ -29,8 +29,8 @@ export class ActivityGraph extends LitElement {
   constructor() {
     super();
 
-    /** @type {ActivityGraphData} */
-    this.data = {};
+    /** @type {ActivityGraphData|null} */
+    this.data = null;
 
     /** @type {IsoDate} */
     this.endDate = new IsoDate();
@@ -169,7 +169,7 @@ export class ActivityGraph extends LitElement {
     return dates.map((date, index) => {
       const dateString = date.toString();
 
-      const data = this.data[dateString];
+      const data = this.data?.[dateString];
       const text = data?.text ?? '';
       const title = data?.title ?? null;
       const dataStyle = data?.style ?? {};
