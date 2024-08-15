@@ -77,7 +77,7 @@ export class ActivityGraph extends LitElement {
       .from({ length: this.startDate.countDaysUntil(this.endDate) })
       .map((_, nbDays) => this.startDate.addDays(nbDays));
 
-    return [this.#renderWeekdayHeaders(), this.#renderMonthHeaders(dates), this.#renderDays(dates)];
+    return [this.#renderWeekdayHeaders(), this.#renderMonthHeaders(dates), this.#renderDays(dates)].flat();
   }
 
   #renderWeekdayHeaders() {
@@ -144,7 +144,7 @@ export class ActivityGraph extends LitElement {
         const currentMonthSlices = allMonthSlices.filter((ms) => monthSlice.date.isSameMonth(ms.date));
         const firstMonthSlice = currentMonthSlices[0];
         if (firstMonthSlice?.index !== index) {
-          return nothing;
+          return null;
         }
         const monthName = firstMonthSlice.date.toLocaleDateString(this.lang, { month: monthHeaderFormat });
         const rawWeekStart = firstMonthSlice.index;
@@ -155,7 +155,8 @@ export class ActivityGraph extends LitElement {
           gridColumnEnd: this.#roundMonthLimit(rawWeekEnd) + columnShift,
         };
         return html` <div part="month-header" style=${styleMap(style)}>${monthName}</div>`;
-      });
+      })
+      .filter((a) => a != null);
   }
 
   /**

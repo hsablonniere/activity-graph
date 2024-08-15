@@ -25,7 +25,7 @@ activity-graph.github::part(weekday-header) {
 }
 
 activity-graph.github::part(weekday-header--even) {
-  display: none;
+  /*display: none;*/
 }
 
 activity-graph.github::part(month-header) {
