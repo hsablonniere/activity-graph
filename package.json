@@ -5,6 +5,7 @@
   "license": "MIT",
   "type": "module",
   "main": "src/activity-graph.js",
+  "repository": "https://github.com/hsablonniere/activity-graph",
   "files": [
     "src"
   ],
