@@ -29,14 +29,14 @@ export class ActivityGraph extends LitElement {
   constructor() {
     super();
 
-    /** @type {ActivityGraphData} */
-    this.data = {};
+    /** @type {ActivityGraphData|null} */
+    this.data = null;
 
     /** @type {IsoDate} */
     this.endDate = new IsoDate();
 
     /** @type {string} */
-    this.lang = document?.querySelector('html')?.lang ?? 'en';
+    this.lang = globalThis.document?.querySelector('html')?.lang || 'en';
 
     /** @type {'none' | MonthHeaderFormat } */
     this.monthHeaders = 'short';
@@ -169,7 +169,7 @@ export class ActivityGraph extends LitElement {
     return dates.map((date, index) => {
       const dateString = date.toString();
 
-      const data = this.data[dateString];
+      const data = this.data?.[dateString];
       const text = data?.text ?? '';
       const title = data?.title ?? null;
       const dataStyle = data?.style ?? {};
@@ -202,4 +202,4 @@ export class ActivityGraph extends LitElement {
   }
 }
 
-window.customElements.define('activity-graph', ActivityGraph);
+customElements.define('activity-graph', ActivityGraph);
