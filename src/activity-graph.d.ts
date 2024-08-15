@@ -8,4 +8,6 @@ export interface ActivityGraphDataEntry {
 
 export type MonthHeaderFormat = 'long' | 'short' | 'narrow' | 'numeric' | '2-digit';
 
+export type MonthPosition = 'top' | 'bottom';
+
 export type WeekdayHeaderFormat = 'long' | 'short' | 'narrow';

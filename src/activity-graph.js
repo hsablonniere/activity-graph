@@ -7,6 +7,7 @@ import { shadowPartAttribute } from './shadow-part-attribute.js';
 /**
  * @typedef {import('./activity-graph.d.ts').ActivityGraphData} ActivityGraphData
  * @typedef {import('./activity-graph.d.ts').MonthHeaderFormat} MonthHeaderFormat
+ * @typedef {import('./activity-graph.d.ts').MonthPosition} MonthPosition
  * @typedef {import('./activity-graph.d.ts').WeekdayHeaderFormat} WeekdayHeaderFormat
  */
 
@@ -18,6 +19,7 @@ export class ActivityGraph extends LitElement {
       lang: { type: String },
       monthHeaders: { type: String, attribute: 'month-headers' },
       monthLimits: { type: String, attribute: 'month-limits' },
+      monthPosition: { type: String, attribute: 'month-position' },
       startDate: { type: IsoDate, attribute: 'start-date', converter: isoDateAttributePropertyConverter },
       weekStartDay: { type: Number, attribute: 'week-start-day' },
       weekdayHeaders: { type: String, attribute: 'weekday-headers' },
@@ -41,6 +43,9 @@ export class ActivityGraph extends LitElement {
 
     /** @type {'early' | 'middle' | 'late'} */
     this.monthLimits = 'middle';
+
+    /** @type {MonthPosition} */
+    this.monthPosition = 'top';
 
     /** @type {IsoDate} */
     this.startDate = this.endDate.addYears(-1);
@@ -81,7 +86,7 @@ export class ActivityGraph extends LitElement {
     }
 
     const weekdayHeaderFormat = this.weekdayHeaders;
-    const monthRow = this.monthHeaders !== 'none';
+    const monthRowAtTop = this.monthHeaders !== 'none' && this.monthPosition === 'top';
 
     return Array.from({ length: 7 }).map((_, nbDays) => {
       const shift = nbDays - this.startDate.getDay() + this.weekStartDay;
@@ -92,7 +97,7 @@ export class ActivityGraph extends LitElement {
       const parts = ['weekday-header', isEvenMonth ? 'weekday-header--even' : 'weekday-header--odd'];
 
       const style = {
-        gridRowStart: nbDays + (monthRow ? 2 : 1),
+        gridRowStart: nbDays + (monthRowAtTop ? 2 : 1),
         gridColumnEnd: 'span 2',
       };
 
@@ -109,6 +114,7 @@ export class ActivityGraph extends LitElement {
     }
 
     const monthHeaderFormat = this.monthHeaders;
+    const monthRowAtTop = this.monthPosition === 'top';
     const weekdayColumn = this.weekdayHeaders !== 'none';
     const columnShift = weekdayColumn ? 3 : 1;
 
@@ -144,7 +150,7 @@ export class ActivityGraph extends LitElement {
         const rawWeekStart = firstMonthSlice.index;
         const rawWeekEnd = rawWeekStart + currentMonthSlices.length;
         const style = {
-          gridRowStart: 1,
+          gridRowStart: monthRowAtTop ? 1 : 8,
           gridColumnStart: this.#roundMonthLimit(rawWeekStart) + columnShift,
           gridColumnEnd: this.#roundMonthLimit(rawWeekEnd) + columnShift,
         };
@@ -157,7 +163,7 @@ export class ActivityGraph extends LitElement {
    */
   #renderDays(dates) {
     const weekdayColumn = this.weekdayHeaders !== 'none';
-    const monthRow = this.monthHeaders !== 'none';
+    const monthRowAtTop = this.monthHeaders !== 'none' && this.monthPosition === 'top';
     const daysBeforeStart = this.startDate.getDay(this.weekStartDay);
 
     return dates.map((date, index) => {
@@ -173,7 +179,7 @@ export class ActivityGraph extends LitElement {
 
       const currentWeek = Math.floor((index + daysBeforeStart) / 7);
       const style = {
-        gridRowStart: 1 + (monthRow ? 1 : 0) + date.getDay(this.weekStartDay),
+        gridRowStart: 1 + (monthRowAtTop ? 1 : 0) + date.getDay(this.weekStartDay),
         gridColumnStart: 1 + (weekdayColumn ? 2 : 0) + currentWeek * 2,
         gridColumnEnd: 'span 2',
         ...dataStyle,
