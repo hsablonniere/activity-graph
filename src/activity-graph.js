@@ -77,7 +77,7 @@ export class ActivityGraph extends LitElement {
       .from({ length: this.startDate.countDaysUntil(this.endDate) })
       .map((_, nbDays) => this.startDate.addDays(nbDays));
 
-    return [this.#renderWeekdayHeaders(), this.#renderMonthHeaders(dates), this.#renderDays(dates)];
+    return [this.#renderWeekdayHeaders(), this.#renderMonthHeaders(dates), this.#renderDays(dates)].flat();
   }
 
   #renderWeekdayHeaders() {
@@ -155,7 +155,8 @@ export class ActivityGraph extends LitElement {
           gridColumnEnd: this.#roundMonthLimit(rawWeekEnd) + columnShift,
         };
         return html` <div part="month-header" style=${styleMap(style)}>${monthName}</div>`;
-      });
+      })
+      .filter((a) => a != nothing);
   }
 
   /**
