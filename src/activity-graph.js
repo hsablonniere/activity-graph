@@ -133,7 +133,7 @@ export class ActivityGraph extends LitElement {
       const isWeekdayHeaderEven = date.weekday % 2 === 0;
       const parts = ['weekday-header', isWeekdayHeaderEven ? 'weekday-header--even' : 'weekday-header--odd'];
 
-      return html`<div part=${shadowPartAttribute(parts)} style="grid-row: ${baseRow + index}">${text}</div>`;
+      return html` <div part=${shadowPartAttribute(parts)} style="grid-row: ${baseRow + index}">${text}</div>`;
     });
   }
 
@@ -177,11 +177,13 @@ export class ActivityGraph extends LitElement {
         const colEnd = baseColumn + dayEnd.weekIndex + 1;
 
         const style = {
+          marginLeft: isGraphStartMonth || firstDayOfTheMonth.weekday === 0 ? null : 'var(--activity-graph-month-gap)',
+          marginRight: isGraphEndMonth || lastDayOfTheMonth.weekday === 6 ? null : 'var(--activity-graph-month-gap)',
           gridColumn: `${colStart}/${colEnd}`,
           gridRow: baseRow,
         };
 
-        return html`<div part="month-header" style=${styleMap(style)}>${monthName}</div>`;
+        return html` <div part="month-header" style=${styleMap(style)}>${monthName}</div>`;
       });
   }
 
@@ -202,6 +204,7 @@ export class ActivityGraph extends LitElement {
 
       const style = {
         gridArea: `${baseRow + date.weekday}/${baseColumn + date.weekIndex}`,
+        marginLeft: date.isInFirstWeekOfTheMonth && date.weekIndex !== 0 ? 'var(--activity-graph-month-gap)' : null,
         ...dataStyle,
       };
 
