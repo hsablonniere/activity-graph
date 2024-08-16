@@ -19,7 +19,9 @@
     <script type="module">
       {
         const githubContributions = await fetch('./data/github-contributions.json').then((r) => r.json());
-        document.querySelector('activity-graph.github').data = githubContributions;
+        Array.from(document.querySelectorAll('activity-graph.github')).forEach(($ag) => {
+          $ag.data = githubContributions;
+        });
       }
 
       {
@@ -107,6 +109,17 @@
       end-date="2023-12-31"
     ></activity-graph>
 
+    <h2>2023 GitHub contributions</h2>
+    <activity-graph
+      class="github"
+      weekday-headers="short"
+      month-limits="middle"
+      lang="en"
+      start-date="2023-01-01"
+      end-date="2023-12-31"
+      style="--activity-graph-month-gap: 20px"
+    ></activity-graph>
+
     <h2>2024 Serializd diary</h2>
     <activity-graph
       class="serializd"
@@ -117,7 +130,7 @@
       end-date="2024-08-13"
     ></activity-graph>
 
-    <h2>2023 Monkeytype</h2>
+    <h2>Monkeytype</h2>
     <activity-graph
       class="monkeytype"
       weekday-headers="long"

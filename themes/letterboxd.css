@@ -1,5 +1,5 @@
 activity-graph.letterboxd {
-  --height: 16px;
+  --size: 16px;
   background-color: #14181c;
   border-radius: 0.25em;
   color: #fff;
@@ -18,8 +18,8 @@ activity-graph.letterboxd::part(month-header) {
 
 activity-graph.letterboxd::part(weekday-header),
 activity-graph.letterboxd::part(day) {
-  height: var(--height);
-  line-height: var(--height);
+  height: var(--size);
+  line-height: var(--size);
 }
 
 activity-graph.letterboxd::part(weekday-header) {
@@ -35,7 +35,7 @@ activity-graph.letterboxd::part(month-header) {
 
 activity-graph.letterboxd::part(day) {
   border-radius: 0.1em;
-  width: var(--height);
+  width: var(--size);
 }
 
 activity-graph.letterboxd::part(day--nodata) {
