@@ -1,12 +1,13 @@
 import { css, html, LitElement, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import { IsoDate, isoDateAttributePropertyConverter } from './iso-date.js';
 import { shadowPartAttribute } from './shadow-part-attribute.js';
 
 /**
+ * @typedef {import('./activity-graph.d.ts').PlainDate} PlainDate
  * @typedef {import('./activity-graph.d.ts').ActivityGraphData} ActivityGraphData
  * @typedef {import('./activity-graph.d.ts').MonthHeaderFormat} MonthHeaderFormat
+ * @typedef {import('./activity-graph.d.ts').MonthLimits} MonthLimits
  * @typedef {import('./activity-graph.d.ts').MonthPosition} MonthPosition
  * @typedef {import('./activity-graph.d.ts').WeekdayHeaderFormat} WeekdayHeaderFormat
  */
@@ -15,12 +16,12 @@ export class ActivityGraph extends LitElement {
   static get properties() {
     return {
       data: { type: Object },
-      endDate: { type: IsoDate, attribute: 'end-date', converter: isoDateAttributePropertyConverter },
+      endDate: { type: String, attribute: 'end-date' },
       lang: { type: String },
       monthHeaders: { type: String, attribute: 'month-headers' },
       monthLimits: { type: String, attribute: 'month-limits' },
       monthPosition: { type: String, attribute: 'month-position' },
-      startDate: { type: IsoDate, attribute: 'start-date', converter: isoDateAttributePropertyConverter },
+      startDate: { type: String, attribute: 'start-date' },
       weekStartDay: { type: Number, attribute: 'week-start-day' },
       weekdayHeaders: { type: String, attribute: 'weekday-headers' },
     };
@@ -29,11 +30,20 @@ export class ActivityGraph extends LitElement {
   constructor() {
     super();
 
+    // Default time window is one year from today to today
+    const baseDate = new Date();
+    const endDate = baseDate.toISOString().substring(0, 10);
+    baseDate.setFullYear(baseDate.getFullYear() - 1);
+    baseDate.setDate(baseDate.getDate() + 1);
+    const startDate = baseDate.toISOString().substring(0, 10);
+
+    console.log({ startDate, endDate });
+
     /** @type {ActivityGraphData|null} */
     this.data = null;
 
-    /** @type {IsoDate} */
-    this.endDate = new IsoDate();
+    /** @type {string} */
+    this.endDate = endDate;
 
     /** @type {string} */
     this.lang = globalThis.document?.querySelector('html')?.lang || 'en';
@@ -41,14 +51,14 @@ export class ActivityGraph extends LitElement {
     /** @type {'none' | MonthHeaderFormat } */
     this.monthHeaders = 'short';
 
-    /** @type {'early' | 'middle' | 'late'} */
-    this.monthLimits = 'middle';
+    /** @type {MonthLimits} */
+    this.monthLimits = 'late';
 
     /** @type {MonthPosition} */
     this.monthPosition = 'top';
 
-    /** @type {IsoDate} */
-    this.startDate = this.endDate.addYears(-1);
+    /** @type {string} */
+    this.startDate = startDate;
 
     /** @type {number} */
     this.weekStartDay = 0;
@@ -58,119 +68,131 @@ export class ActivityGraph extends LitElement {
   }
 
   /**
-   * @param {number} value
-   * @return {number}
+   * @return {Array<PlainDate>}
    */
-  #roundMonthLimit(value) {
-    if (this.monthLimits === 'early') {
-      return Math.floor(value / 2) * 2;
+  #getDates() {
+    const currentDate = new Date(this.startDate);
+    const endDate = new Date(this.endDate);
+    const startDateWeekday = this.#getWeekday(currentDate);
+
+    /** @type {Array<PlainDate>} */
+    const dates = [];
+
+    while (currentDate <= endDate) {
+      const date = currentDate.getDate();
+      const weekday = this.#getWeekday(currentDate);
+      dates.push({
+        id: currentDate.toISOString().substring(0, 10),
+        year: currentDate.getFullYear(),
+        month: currentDate.getMonth() + 1,
+        date,
+        weekday,
+        weekIndex: Math.floor((dates.length + startDateWeekday) / 7),
+        isInFirstWeekOfTheMonth: date <= weekday + 1,
+      });
+      currentDate.setDate(currentDate.getDate() + 1);
     }
-    if (this.monthLimits === 'late') {
-      return Math.ceil(value / 2) * 2;
-    }
-    return value;
+
+    return dates;
+  }
+
+  /**
+   * @param {Date} date
+   */
+  #getWeekday(date) {
+    return (date.getDay() + 7 - this.weekStartDay) % 7;
   }
 
   render() {
-    const dates = Array
-      //
-      .from({ length: this.startDate.countDaysUntil(this.endDate) })
-      .map((_, nbDays) => this.startDate.addDays(nbDays));
-
-    return [this.#renderWeekdayHeaders(), this.#renderMonthHeaders(dates), this.#renderDays(dates)].flat();
+    const dates = this.#getDates();
+    const baseRowDays = this.monthHeaders === 'none' || this.monthPosition === 'bottom' ? 1 : 2;
+    const baseRowMonthHeaders = this.monthPosition === 'top' ? 1 : 8;
+    const baseColumnDays = this.weekdayHeaders === 'none' ? 1 : 2;
+    return [
+      this.#renderWeekdayHeaders(dates, baseRowDays),
+      this.#renderMonthHeaders(dates, baseRowMonthHeaders, baseColumnDays),
+      this.#renderDays(dates, baseRowDays, baseColumnDays),
+    ].flat();
   }
 
-  #renderWeekdayHeaders() {
+  /**
+   * @param {Array<PlainDate>} dates
+   * @param {number} baseRow
+   */
+  #renderWeekdayHeaders(dates, baseRow) {
     if (this.weekdayHeaders === 'none') {
       return nothing;
     }
 
+    const shift = 7 - dates[0].weekday;
     const weekdayHeaderFormat = this.weekdayHeaders;
-    const monthRowAtTop = this.monthHeaders !== 'none' && this.monthPosition === 'top';
 
-    return Array.from({ length: 7 }).map((_, nbDays) => {
-      const shift = nbDays - this.startDate.getDay() + this.weekStartDay;
-      const date = this.startDate.addDays(shift);
-      const text = date.toLocaleDateString(this.lang, { weekday: weekdayHeaderFormat });
+    return dates.slice(shift, shift + 7).map((date, index) => {
+      const text = new Date(date.id).toLocaleDateString(this.lang, { weekday: weekdayHeaderFormat });
 
-      const isEvenMonth = date.getDay(this.weekStartDay) % 2 === 0;
-      const parts = ['weekday-header', isEvenMonth ? 'weekday-header--even' : 'weekday-header--odd'];
+      const isWeekdayHeaderEven = date.weekday % 2 === 0;
+      const parts = ['weekday-header', isWeekdayHeaderEven ? 'weekday-header--even' : 'weekday-header--odd'];
 
-      const style = {
-        gridRowStart: nbDays + (monthRowAtTop ? 2 : 1),
-        gridColumnEnd: 'span 2',
-      };
-
-      return html` <div part=${shadowPartAttribute(parts)} style=${styleMap(style)}>${text}</div>`;
+      return html`<div part=${shadowPartAttribute(parts)} style="grid-row: ${baseRow + index}">${text}</div>`;
     });
   }
 
   /**
-   * @param {IsoDate[]} dates
+   * @param {Array<PlainDate>} dates
+   * @param {number} baseRow
+   * @param {number} baseColumn
    */
-  #renderMonthHeaders(dates) {
+  #renderMonthHeaders(dates, baseRow, baseColumn) {
     if (this.monthHeaders === 'none') {
       return nothing;
     }
 
     const monthHeaderFormat = this.monthHeaders;
-    const monthRowAtTop = this.monthPosition === 'top';
-    const weekdayColumn = this.weekdayHeaders !== 'none';
-    const columnShift = weekdayColumn ? 3 : 1;
 
     return dates
-      .flatMap((date) => {
-        const rebasedWeekday = date.getDay(this.weekStartDay);
+      .filter((d, i) => i === 0 || d.date === 1)
+      .map((firstDayOfTheMonth, i, all) => {
+        const monthName = new Date(firstDayOfTheMonth.id).toLocaleDateString(this.lang, { month: monthHeaderFormat });
 
-        const isGraphStartDate = date.isSameDate(this.startDate);
-        const isWeekStartDay = rebasedWeekday === 0;
-        const isWeekEndDay = rebasedWeekday === 6;
-        const isGraphEndDate = date.isSameDate(this.endDate);
+        const { year, month } = firstDayOfTheMonth;
+        const lastDayOfTheMonth = dates.findLast((d) => d.year === year && d.month === month);
+        const isGraphStartMonth = i === 0;
+        const isGraphEndMonth = i === all.length - 1;
 
-        if ((isGraphStartDate && isWeekEndDay) || (isWeekStartDay && isGraphEndDate)) {
-          return [date, date];
+        const dayStart =
+          isGraphStartMonth || this.monthLimits !== 'late'
+            ? firstDayOfTheMonth
+            : dates.find((d) => d.year === year && d.month === month && d.weekday === 0);
+
+        const dayEnd =
+          isGraphEndMonth || this.monthLimits !== 'early'
+            ? lastDayOfTheMonth
+            : dates.findLast((d) => d.year === year && d.month === month && d.weekday === 6);
+
+        if (firstDayOfTheMonth == null || lastDayOfTheMonth == null || dayStart == null || dayEnd == null) {
+          throw new Error('TODO');
         }
 
-        if (isGraphStartDate || isWeekStartDay || isWeekEndDay || isGraphEndDate) {
-          return date;
-        }
+        const colStart = baseColumn + dayStart.weekIndex;
+        const colEnd = baseColumn + dayEnd.weekIndex + 1;
 
-        return [];
-      })
-      .map((date, index) => {
-        return { date, index };
-      })
-      .map((monthSlice, index, allMonthSlices) => {
-        const currentMonthSlices = allMonthSlices.filter((ms) => monthSlice.date.isSameMonth(ms.date));
-        const firstMonthSlice = currentMonthSlices[0];
-        if (firstMonthSlice?.index !== index) {
-          return nothing;
-        }
-        const monthName = firstMonthSlice.date.toLocaleDateString(this.lang, { month: monthHeaderFormat });
-        const rawWeekStart = firstMonthSlice.index;
-        const rawWeekEnd = rawWeekStart + currentMonthSlices.length;
         const style = {
-          gridRowStart: monthRowAtTop ? 1 : 8,
-          gridColumnStart: this.#roundMonthLimit(rawWeekStart) + columnShift,
-          gridColumnEnd: this.#roundMonthLimit(rawWeekEnd) + columnShift,
+          gridColumn: `${colStart}/${colEnd}`,
+          gridRow: baseRow,
         };
-        return html` <div part="month-header" style=${styleMap(style)}>${monthName}</div>`;
-      })
-      .filter((a) => a != nothing);
+
+        return html`<div part="month-header" style=${styleMap(style)}>${monthName}</div>`;
+      });
   }
 
   /**
-   * @param {IsoDate[]} dates
+   * @param {Array<PlainDate>} dates
+   * @param {number} baseRow
+   * @param {number} baseColumn
    */
-  #renderDays(dates) {
-    const weekdayColumn = this.weekdayHeaders !== 'none';
-    const monthRowAtTop = this.monthHeaders !== 'none' && this.monthPosition === 'top';
-    const daysBeforeStart = this.startDate.getDay(this.weekStartDay);
-
-    return dates.map((date, index) => {
-      const dateString = date.toString();
-
-      const data = this.data?.[dateString];
+  #renderDays(dates, baseRow, baseColumn) {
+    return dates.map((date) => {
+      const data = this.data?.[date.id];
       const text = data?.text ?? '';
       const title = data?.title ?? null;
       const dataStyle = data?.style ?? {};
@@ -178,16 +200,15 @@ export class ActivityGraph extends LitElement {
       const hasData = data != null;
       const parts = ['day', hasData ? 'day--data' : 'day--nodata'];
 
-      const currentWeek = Math.floor((index + daysBeforeStart) / 7);
       const style = {
-        gridRowStart: 1 + (monthRowAtTop ? 1 : 0) + date.getDay(this.weekStartDay),
-        gridColumnStart: 1 + (weekdayColumn ? 2 : 0) + currentWeek * 2,
-        gridColumnEnd: 'span 2',
+        gridArea: `${baseRow + date.weekday}/${baseColumn + date.weekIndex}`,
         ...dataStyle,
       };
 
       return html`
-        <div part=${shadowPartAttribute(parts)} title=${ifDefined(title)} style=${styleMap(style)}>${text}</div>
+        <div part=${shadowPartAttribute(parts)} title=${ifDefined(title)} style=${styleMap(style)} data-date=${date.id}>
+          ${text}
+        </div>
       `;
     });
   }
@@ -196,7 +217,6 @@ export class ActivityGraph extends LitElement {
     return css`
       :host {
         display: grid;
-        grid-auto-columns: auto;
         justify-content: start;
       }
     `;
