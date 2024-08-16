@@ -37,8 +37,6 @@ export class ActivityGraph extends LitElement {
     baseDate.setDate(baseDate.getDate() + 1);
     const startDate = baseDate.toISOString().substring(0, 10);
 
-    console.log({ startDate, endDate });
-
     /** @type {ActivityGraphData|null} */
     this.data = null;
 
