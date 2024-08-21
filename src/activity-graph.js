@@ -33,8 +33,8 @@ export class ActivityGraph extends LitElement {
     // Default time window is one year from today to today
     const baseDate = new Date();
     const endDate = baseDate.toISOString().substring(0, 10);
-    baseDate.setFullYear(baseDate.getFullYear() - 1);
-    baseDate.setDate(baseDate.getDate() + 1);
+    baseDate.setUTCFullYear(baseDate.getFullYear() - 1);
+    baseDate.setUTCDate(baseDate.getDate() + 1);
     const startDate = baseDate.toISOString().substring(0, 10);
 
     /** @type {ActivityGraphData|null} */
@@ -88,7 +88,7 @@ export class ActivityGraph extends LitElement {
         weekIndex: Math.floor((dates.length + startDateWeekday) / 7),
         isInFirstWeekOfTheMonth: date <= weekday + 1,
       });
-      currentDate.setDate(currentDate.getDate() + 1);
+      currentDate.setUTCDate(currentDate.getDate() + 1);
     }
 
     return dates;
