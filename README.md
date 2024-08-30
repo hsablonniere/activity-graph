@@ -34,14 +34,13 @@ or esm.sh:
 Use the `<activity-graph>` custom HTML tag like this:
 
 ```html
-
 <activity-graph start-date="2024-01-01" end-date="2024-12-31"></activity-graph>
 ```
 
 ### Attributes / properties
 
 | Attribute         | Property         | Type                                                                | Default                                                                         | Description |
-|-------------------|------------------|---------------------------------------------------------------------|---------------------------------------------------------------------------------|-------------|
+| ----------------- | ---------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------- |
 | `start-date`      | `startDate`      | `YYYY-MM-DD`                                                        | A year ago                                                                      | TODO        |
 | `end-date`        | `endDate`        | `YYYY-MM-DD`                                                        | Today                                                                           | TODO        |
 | `data`            | `data`           | `object`                                                            | `null`                                                                          | TODO        |
@@ -64,17 +63,15 @@ You'll have to rely on the different CSS parts and custom properties to style it
 TODO link to theme examples
 
 | Part                   | Description |
-|------------------------|-------------|
+| ---------------------- | ----------- |
 | `weekday-header`       | TODO        |
 | `weekday-header--even` | TODO        |
 | `weekday-header--odd`  | TODO        |
 | `month-header`         | TODO        |
 | `day`                  | TODO        |
-| `day--data`            | TODO        |
-| `day--nodata`          | TODO        |
 
 | Property                          | Description |
-|-----------------------------------|-------------|
+| --------------------------------- | ----------- |
 | `var(--activity-graph-month-gap)` | TODO        |
 
 NOTE: You can rely on the fact that the element has a `display: grid` and use properties like `gap` directly on it.
@@ -96,23 +93,23 @@ TODO (no lit, 1 simple CSS grid, no styles, under 1k, then lit...)
 
 I created this project without looking at the competition but obviously many smart people tried before me.
 
-[Mario Hamann ](https://github.com/mariohamann) also made a Web Component and his approach (a11y, WASM, SSR...) is very interesting!
+[Mario Hamann](https://github.com/mariohamann) also made a Web Component and his approach (a11y, WASM, SSR...) is very interesting!
 
-* GitHub project: https://github.com/mariohamann/activity-graph
-* Article: https://mariohamann.com/activity-graph-component
+- GitHub project: https://github.com/mariohamann/activity-graph
+- Article: https://mariohamann.com/activity-graph-component
 
 And of course, there are plenty of framework specific components for React, Vue, Svelte:
 
-* https://github.com/Angstboksen/date-activity-graph
-* https://github.com/AyushSaini00/github-contribution-graph
-* https://github.com/KaranGulve4342/react-github-contributions
-* https://github.com/cairongquan/contriGraph
-* https://github.com/charpeni/sync-external-contributions
-* https://github.com/grubersjoe/react-activity-calendar
-* https://github.com/grubersjoe/react-github-calendar
-* https://github.com/marcelovicentegc/react-github-heatmap
-* https://github.com/razorness/vue3-calendar-heatmap
-* https://github.com/scottbedard/svelte-heatmap
-* https://github.com/srivenkat13/github-calendar-component
-* https://github.com/uiwjs/react-heat-map
-* https://github.com/x3388638/github-calendar-graph
+- https://github.com/Angstboksen/date-activity-graph
+- https://github.com/AyushSaini00/github-contribution-graph
+- https://github.com/KaranGulve4342/react-github-contributions
+- https://github.com/cairongquan/contriGraph
+- https://github.com/charpeni/sync-external-contributions
+- https://github.com/grubersjoe/react-activity-calendar
+- https://github.com/grubersjoe/react-github-calendar
+- https://github.com/marcelovicentegc/react-github-heatmap
+- https://github.com/razorness/vue3-calendar-heatmap
+- https://github.com/scottbedard/svelte-heatmap
+- https://github.com/srivenkat13/github-calendar-component
+- https://github.com/uiwjs/react-heat-map
+- https://github.com/x3388638/github-calendar-graph
