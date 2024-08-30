@@ -34,11 +34,23 @@ activity-graph.letterboxd::part(month-header) {
 }
 
 activity-graph.letterboxd::part(day) {
+  background-color: rgb(68, 85, 102, 0.25);
   border-radius: 0.1em;
   width: var(--size);
 }
 
-activity-graph.letterboxd::part(day--nodata) {
-  opacity: 0.25;
-  background-color: #445566;
+activity-graph.letterboxd::part(day--data-1) {
+  background-color: rgb(0, 224, 84, 0.4);
+}
+
+activity-graph.letterboxd::part(day--data-2) {
+  background-color: rgb(0, 224, 84, 0.6);
+}
+
+activity-graph.letterboxd::part(day--data-3) {
+  background-color: rgb(0, 224, 84, 0.8);
+}
+
+activity-graph.letterboxd::part(day--data-4) {
+  background-color: rgb(0, 224, 84, 1);
 }

@@ -195,15 +195,13 @@ export class ActivityGraph extends LitElement {
       const data = this.data?.[date.id];
       const text = data?.text ?? '';
       const title = data?.title ?? null;
-      const dataStyle = data?.style ?? {};
 
-      const hasData = data != null;
-      const parts = ['day', hasData ? 'day--data' : 'day--nodata'];
+      const dataParts = data?.parts ?? [];
+      const parts = ['day', ...dataParts];
 
       const style = {
         gridArea: `${baseRow + date.weekday}/${baseColumn + date.weekIndex}`,
         marginLeft: date.isInFirstWeekOfTheMonth && date.weekIndex !== 0 ? 'var(--activity-graph-month-gap)' : null,
-        ...dataStyle,
       };
 
       return html`

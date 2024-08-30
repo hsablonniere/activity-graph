@@ -34,10 +34,23 @@ activity-graph.monkeytype::part(month-header) {
 }
 
 activity-graph.monkeytype::part(day) {
+  background-color: #323437;
   border-radius: 0.275em;
   width: var(--width);
 }
 
-activity-graph.monkeytype::part(day--nodata) {
-  background-color: #323437;
+activity-graph.monkeytype::part(day--data-1) {
+  background-color: #50492b;
+}
+
+activity-graph.monkeytype::part(day--data-2) {
+  background-color: #877322;
+}
+
+activity-graph.monkeytype::part(day--data-3) {
+  background-color: #b4951b;
+}
+
+activity-graph.monkeytype::part(day--data-4) {
+  background-color: #e2b714;
 }

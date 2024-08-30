@@ -13,7 +13,7 @@ export type ActivityGraphData = Record<string, ActivityGraphDataEntry>;
 export interface ActivityGraphDataEntry {
   text?: string;
   title?: string;
-  style?: Record<string, string>;
+  parts?: Array<string>;
 }
 
 export type MonthHeaderFormat = 'long' | 'short' | 'narrow' | 'numeric' | '2-digit';

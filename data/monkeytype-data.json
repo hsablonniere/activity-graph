@@ -1,158 +1,158 @@
 {
   "2024-06-14": {
-    "level": 2,
-    "tests": 9
+    "parts": ["day--data-2"],
+    "title": "9 tests on 2024-06-14"
   },
   "2024-06-15": {
-    "level": 4,
-    "tests": 5
+    "parts": ["day--data-4"],
+    "title": "5 tests on 2024-06-15"
   },
   "2024-06-16": {
-    "level": 2,
-    "tests": 1
+    "parts": ["day--data-2"],
+    "title": "1 tests on 2024-06-16"
   },
   "2024-06-17": {
-    "level": 2,
-    "tests": 1
+    "parts": ["day--data-2"],
+    "title": "1 tests on 2024-06-17"
   },
   "2024-06-18": {
-    "level": 1,
-    "tests": 8
+    "parts": ["day--data-1"],
+    "title": "8 tests on 2024-06-18"
   },
   "2024-06-19": {
-    "level": 2,
-    "tests": 1
+    "parts": ["day--data-2"],
+    "title": "1 tests on 2024-06-19"
   },
   "2024-06-20": {
-    "level": 2,
-    "tests": 1
+    "parts": ["day--data-2"],
+    "title": "1 tests on 2024-06-20"
   },
   "2024-06-21": {
-    "level": 2,
-    "tests": 1
+    "parts": ["day--data-2"],
+    "title": "1 tests on 2024-06-21"
   },
   "2024-06-22": {
-    "level": 1,
-    "tests": 5
+    "parts": ["day--data-1"],
+    "title": "5 tests on 2024-06-22"
   },
   "2024-06-24": {
-    "level": 1,
-    "tests": 5
+    "parts": ["day--data-1"],
+    "title": "5 tests on 2024-06-24"
   },
   "2024-06-25": {
-    "level": 1,
-    "tests": 8
+    "parts": ["day--data-1"],
+    "title": "8 tests on 2024-06-25"
   },
   "2024-06-26": {
-    "level": 4,
-    "tests": 3
+    "parts": ["day--data-4"],
+    "title": "3 tests on 2024-06-26"
   },
   "2024-06-27": {
-    "level": 3,
-    "tests": 1
+    "parts": ["day--data-3"],
+    "title": "1 tests on 2024-06-27"
   },
   "2024-06-28": {
-    "level": 4,
-    "tests": 8
+    "parts": ["day--data-4"],
+    "title": "8 tests on 2024-06-28"
   },
   "2024-06-30": {
-    "level": 4,
-    "tests": 6
+    "parts": ["day--data-4"],
+    "title": "6 tests on 2024-06-30"
   },
   "2024-07-01": {
-    "level": 2,
-    "tests": 1
+    "parts": ["day--data-2"],
+    "title": "1 tests on 2024-07-01"
   },
   "2024-07-02": {
-    "level": 2,
-    "tests": 1
+    "parts": ["day--data-2"],
+    "title": "1 tests on 2024-07-02"
   },
   "2024-07-03": {
-    "level": 4,
-    "tests": 5
+    "parts": ["day--data-4"],
+    "title": "5 tests on 2024-07-03"
   },
   "2024-07-04": {
-    "level": 4,
-    "tests": 2
+    "parts": ["day--data-4"],
+    "title": "2 tests on 2024-07-04"
   },
   "2024-07-05": {
-    "level": 4,
-    "tests": 3
+    "parts": ["day--data-4"],
+    "title": "3 tests on 2024-07-05"
   },
   "2024-07-06": {
-    "level": 4,
-    "tests": 3
+    "parts": ["day--data-4"],
+    "title": "3 tests on 2024-07-06"
   },
   "2024-07-07": {
-    "level": 4,
-    "tests": 3
+    "parts": ["day--data-4"],
+    "title": "3 tests on 2024-07-07"
   },
   "2024-07-11": {
-    "level": 1,
-    "tests": 6
+    "parts": ["day--data-1"],
+    "title": "6 tests on 2024-07-11"
   },
   "2024-07-12": {
-    "level": 1,
-    "tests": 6
+    "parts": ["day--data-1"],
+    "title": "6 tests on 2024-07-12"
   },
   "2024-07-13": {
-    "level": 3,
-    "tests": 2
+    "parts": ["day--data-3"],
+    "title": "2 tests on 2024-07-13"
   },
   "2024-07-14": {
-    "level": 3,
-    "tests": 1
+    "parts": ["day--data-3"],
+    "title": "1 tests on 2024-07-14"
   },
   "2024-07-15": {
-    "level": 4,
-    "tests": 3
+    "parts": ["day--data-4"],
+    "title": "3 tests on 2024-07-15"
   },
   "2024-07-18": {
-    "level": 3,
-    "tests": 2
+    "parts": ["day--data-3"],
+    "title": "2 tests on 2024-07-18"
   },
   "2024-07-20": {
-    "level": 4,
-    "tests": 4
+    "parts": ["day--data-4"],
+    "title": "4 tests on 2024-07-20"
   },
   "2024-07-21": {
-    "level": 2,
-    "tests": 9
+    "parts": ["day--data-2"],
+    "title": "9 tests on 2024-07-21"
   },
   "2024-07-24": {
-    "level": 2,
-    "tests": 1
+    "parts": ["day--data-2"],
+    "title": "1 tests on 2024-07-24"
   },
   "2024-07-25": {
-    "level": 2,
-    "tests": 9
+    "parts": ["day--data-2"],
+    "title": "9 tests on 2024-07-25"
   },
   "2024-07-26": {
-    "level": 1,
-    "tests": 7
+    "parts": ["day--data-1"],
+    "title": "7 tests on 2024-07-26"
   },
   "2024-07-28": {
-    "level": 1,
-    "tests": 5
+    "parts": ["day--data-1"],
+    "title": "5 tests on 2024-07-28"
   },
   "2024-07-30": {
-    "level": 1,
-    "tests": 4
+    "parts": ["day--data-1"],
+    "title": "4 tests on 2024-07-30"
   },
   "2024-07-31": {
-    "level": 1,
-    "tests": 6
+    "parts": ["day--data-1"],
+    "title": "6 tests on 2024-07-31"
   },
   "2024-08-06": {
-    "level": 1,
-    "tests": 2
+    "parts": ["day--data-1"],
+    "title": "2 tests on 2024-08-06"
   },
   "2024-08-08": {
-    "level": 1,
-    "tests": 2
+    "parts": ["day--data-1"],
+    "title": "2 tests on 2024-08-08"
   },
   "2024-08-09": {
-    "level": 1,
-    "tests": 4
+    "parts": ["day--data-1"],
+    "title": "4 tests on 2024-08-09"
   }
 }

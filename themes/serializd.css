@@ -25,9 +25,30 @@ activity-graph.serializd::part(weekday-header) {
 }
 
 activity-graph.serializd::part(day) {
+  background-color: #181c20;
   width: var(--size);
 }
 
-activity-graph.serializd::part(day--nodata) {
-  background-color: #181c20;
+activity-graph.serializd::part(day--data-1) {
+  background-color: rgba(13, 148, 136, 0.4);
+}
+
+activity-graph.serializd::part(day--data-2) {
+  background-color: rgba(13, 148, 136, 0.6);
+}
+
+activity-graph.serializd::part(day--data-3) {
+  background-color: rgba(13, 148, 136, 0.6);
+}
+
+activity-graph.serializd::part(day--data-4) {
+  background-color: rgba(13, 148, 136, 0.8);
+}
+
+activity-graph.serializd::part(day--data-5) {
+  background-color: rgba(13, 148, 136, 0.8);
+}
+
+activity-graph.serializd::part(day--data-6) {
+  background-color: rgba(13, 148, 136, 1);
 }
