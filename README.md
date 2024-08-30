@@ -39,17 +39,81 @@ Use the `<activity-graph>` custom HTML tag like this:
 
 ### Attributes / properties
 
-| Attribute         | Property         | Type                                                                | Default                                                                         | Description |
-| ----------------- | ---------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------- |
-| `start-date`      | `startDate`      | `YYYY-MM-DD`                                                        | A year ago                                                                      | TODO        |
-| `end-date`        | `endDate`        | `YYYY-MM-DD`                                                        | Today                                                                           | TODO        |
-| `data`            | `data`           | `object`                                                            | `null`                                                                          | TODO        |
-| `lang`            | `lang`           | `string`                                                            | Document language (`lang` attribute on the `html` tag) or `en` if not specified | TODO        |
-| `week-start-day`  | `weekStartDay`   | `number`                                                            | `0` (sunday)                                                                    | TODO        |
-| `weekday-headers` | `weekdayHeaders` | `'none' \| 'long' \| 'short' \| 'narrow'`                           | `narrow`                                                                        | TODO        |
-| `month-headers`   | `monthHeaders`   | `'none' \| 'long' \| 'short' \| 'narrow' \| 'numeric' \| '2-digit'` | `short`                                                                         | TODO        |
-| `month-limits`    | `monthLimits`    | `'early' \| 'middle' \| 'late'`                                     | `late`                                                                          | TODO        |
-| `month-position`  | `monthPosition`  | `'top' \| 'bottom'`                                                 | `top`                                                                           | TODO        |
+<table>
+  <tr>
+    <th>Attribute
+    <th>Property
+    <th>Type
+    <th>Default
+  <tr>
+    <td><code>start-date</code>
+    <td><code>startDate</code>
+    <td><code>YYYY-MM-DD</code>
+    <td>A year ago
+  <tr>
+    <td colspan="4">Start date of the graph
+  <tr>
+    <td><code>end-date</code>
+    <td><code>endDate</code>
+    <td><code>YYYY-MM-DD</code>
+    <td>Today
+  <tr>
+    <td colspan="4">End date of the graph
+  <tr>
+    <td><code>data</code>
+    <td><code>data</code>
+    <td><code>object</code>
+    <td><code>null</code>
+  <tr>
+    <td colspan="4">Data object, see <code>Data</code> section below
+  <tr>
+    <td><code>lang</code>
+    <td><code>lang</code>
+    <td><code>string</code>
+    <td>Document language (<code>lang</code> attribute on the <code>html</code> tag) or <code>en</code> if not specified
+  <tr>
+    <td colspan="4">BCP 47 language code used to translate weekday and month headers
+  <tr>
+    <td><code>week-start-day</code>
+    <td><code>weekStartDay</code>
+    <td><code>number</code>
+    <td><code>0</code> (sunday)
+  <tr>
+    <td colspan="4">Number representing the day of the week for first row
+  <tr>
+    <td><code>weekday-headers</code>
+    <td><code>weekdayHeaders</code>
+    <td><code>'none' | 'long' | 'short' | 'narrow'</code>
+    <td><code>narrow</code>
+  <tr>
+    <td colspan="4">Format used for weekday headers (see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#weekday">DateTimeFormat#weekday</a>) or <code>'none'</code> to hide them
+  <tr>
+    <td><code>month-headers</code>
+    <td><code>monthHeaders</code>
+    <td><code>'none' | 'long' | 'short' | 'narrow' | 'numeric' | '2-digit'</code>
+    <td><code>short</code>
+  <tr>
+    <td colspan="4">Format used for month headers (see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#month">DateTimeFormat#month</a>) or <code>'none'</code> to hide them
+  <tr>
+    <td><code>month-limits</code>
+    <td><code>monthLimits</code>
+    <td><code>'early' | 'middle' | 'late'</code>
+    <td><code>late</code>
+  <tr>
+    <td colspan="4">Where to start/end month headers:
+      <ul>
+        <li><code>'early'</code>: month headers start on week with first day of month and end on last full week
+        <li><code>'middle'</code>: month headers will overlap
+        <li><code>'late'</code>: month headers start on week first full week of month and end on week with last day of month
+      </ul>
+  <tr>
+    <td><code>month-position</code>
+    <td><code>monthPosition</code>
+    <td><code>'top' | 'bottom'</code>
+    <td><code>top</code>
+  <tr>
+    <td colspan="4">Where to put month headers
+</table>
 
 ### Data
 
