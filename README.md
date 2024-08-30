@@ -48,14 +48,14 @@ Use the `<activity-graph>` custom HTML tag like this:
   <tr>
     <td><code>start-date</code>
     <td><code>startDate</code>
-    <td><code>YYYY-MM-DD</code>
+    <td><code>string</code> with <code>YYYY-MM-DD</code> format
     <td>A year ago
   <tr>
     <td colspan="4">Start date of the graph
   <tr>
     <td><code>end-date</code>
     <td><code>endDate</code>
-    <td><code>YYYY-MM-DD</code>
+    <td><code>string</code> with <code>YYYY-MM-DD</code> format
     <td>Today
   <tr>
     <td colspan="4">End date of the graph
