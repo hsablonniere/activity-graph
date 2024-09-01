@@ -2,11 +2,14 @@
 
 A low level and stylable Web Component to display an activity graph.
 
-## Demos
+## Demos and screenshots
 
-[Demo page](https://hsablonniere.github.io/activity-graph/).
+You can see the component in action on the [demo page](https://hsablonniere.github.io/activity-graph/).
 
-## Screenshots
+> [!NOTE]
+>
+> Keep in mind that the themes on the demo page and screenshots are just examples of what can be done.
+> They're not released with this component, you will have to create your own theme.
 
 ### GitHub
 
