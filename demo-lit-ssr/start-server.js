@@ -1,9 +1,12 @@
 import { render } from '@lit-labs/ssr';
 import { collectResult } from '@lit-labs/ssr/lib/render-result.js';
+import fs from 'fs';
 import http from 'http';
 import { html } from 'lit';
-import githubContributions from '../data/github-contributions.json' with { type: 'json' };
 import '../src/activity-graph.js';
+
+const githubContributionsJson = fs.readFileSync('./data/github-contributions.json', 'utf8');
+const githubContributions = JSON.parse(githubContributionsJson);
 
 http
   .createServer(async (req, res) => {
