@@ -1,8 +1,11 @@
 {
   "name": "@hsablonniere/activity-graph",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A low level and stylable Web Component to display an activity graph.",
-  "keywords": ["activity-graph", "web-component"],
+  "keywords": [
+    "activity-graph",
+    "web-component"
+  ],
   "license": "MIT",
   "type": "module",
   "main": "src/activity-graph.js",
