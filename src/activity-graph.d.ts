@@ -1,4 +1,4 @@
-export interface PlainDate extends PlainDatePartial {
+export interface PlainDate {
   id: string;
   year: number;
   month: number;
