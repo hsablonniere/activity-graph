@@ -12,6 +12,7 @@
   "scripts": {
     "check": "npm run lint:fix && npm run format && npm run typecheck && npm run test",
     "dev": "web-dev-server --node-resolve --watch --port 8080",
+    "demo-lit-ssr": "node demo-lit-ssr/start-server.js",
     "format": "prettier --config .prettierrc.js --write --cache .",
     "format:check": "prettier --config .prettierrc.js --check .",
     "lint": "eslint -c config/eslint.config.js --ignore-pattern .wrangler/",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@lit-labs/ssr": "^3.2.2",
     "@types/node": "^22.4.0",
     "@web/dev-server": "^0.4.6",
     "eslint": "^9.9.0",
