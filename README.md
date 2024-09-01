@@ -1,15 +1,43 @@
 # activity-graph
 
-WARNING: The documentation is still WIP...
+A low level and stylable Web Component to display an activity graph.
 
-A low level stylable Web Component to display an activity graph.
+## Demos
+
+[Demo page](https://hsablonniere.github.io/activity-graph/).
+
+## Screenshots
+
+### GitHub
+
+Here's an example of my 2023 GitHub contribution graph.
+
+![An activity graph representing a year with weeks as columns. Some days are colored with different tones for indicating contribution intensity. It's the same theme as the one on GitHub.](./screenshots/github-demo-screenshot.png)
+
+### Serializd
+
+Here's an example of my 2024 Serializd stats graph.
+
+![[An activity graph representing a year with weeks as columns. Some days are colored with different tones for indicating how many TV show episodes were watched. It's the same theme as the one on Serializd.]](./screenshots/serializd-demo-screenshot.png)
+
+### Monkeytype
+
+Here's an example of my 2024 Monkeytype stats graph.
+
+![[An activity graph representing a year with weeks as columns. Some days are colored with different tones for indicating how many tests were done. It's the same theme as the one on Monkeytype.]](./screenshots/monkeytype-demo-screenshot.png)
+
+### Letterboxd
+
+Here's an example of what could be my 2023 Letterboxd stats graph, if they had such a graph.
+
+![[An activity graph representing a year with weeks as columns. Some days are colored with different tones for indicating how many movies were watched. It's following the general look and feel of Letterboxd.]](./screenshots/letterboxd-demo-screenshot.png)
 
 ## How to install?
 
 ### Via npm
 
 This component is published on [npm](https://www.npmjs.com/package/@hsablonniere/activity-graph).
-You can "npm install" it in your project like this:
+You can "npm install" it in your project with this command:
 
 ```bash
 npm install @hsablonniere/activity-graph
@@ -51,21 +79,21 @@ Use the `<activity-graph>` custom HTML tag like this:
     <td><code>string</code> with <code>YYYY-MM-DD</code> format
     <td>A year ago
   <tr>
-    <td colspan="4">Start date of the graph
+    <td colspan="4">First date of the graph
   <tr>
     <td><code>end-date</code>
     <td><code>endDate</code>
     <td><code>string</code> with <code>YYYY-MM-DD</code> format
     <td>Today
   <tr>
-    <td colspan="4">End date of the graph
+    <td colspan="4">Last date of the graph
   <tr>
     <td><code>data</code>
     <td><code>data</code>
-    <td><code>object</code>
+    <td><code>ActivityGraphData</code>
     <td><code>null</code>
   <tr>
-    <td colspan="4">Data object, see <code>Data</code> section below
+    <td colspan="4">Data object, see <em>Data</em> section below
   <tr>
     <td><code>lang</code>
     <td><code>lang</code>
@@ -79,7 +107,7 @@ Use the `<activity-graph>` custom HTML tag like this:
     <td><code>number</code>
     <td><code>0</code> (sunday)
   <tr>
-    <td colspan="4">Number representing the day of the week for first row
+    <td colspan="4">Number representing the first day of the week, from <code>0</code>0 (sunday) to <code>6</code> (saturday)
   <tr>
     <td><code>weekday-headers</code>
     <td><code>weekdayHeaders</code>
@@ -100,10 +128,10 @@ Use the `<activity-graph>` custom HTML tag like this:
     <td><code>'early' | 'middle' | 'late'</code>
     <td><code>late</code>
   <tr>
-    <td colspan="4">Where to start/end month headers:
+    <td colspan="4">When to start/end month headers:
       <ul>
         <li><code>'early'</code>: month headers start on week with first day of month and end on last full week
-        <li><code>'middle'</code>: month headers will overlap
+        <li><code>'middle'</code>: month headers start on week with first day of month and and end on week with last day of month (month headers will overlap), it's the best choice when <code>--activity-graph-month-gap</code> is used
         <li><code>'late'</code>: month headers start on week first full week of month and end on week with last day of month
       </ul>
   <tr>
@@ -117,28 +145,72 @@ Use the `<activity-graph>` custom HTML tag like this:
 
 ### Data
 
-TODO
+The data can be set as a JavaScript object on the `data` property, or as JSON on the `data` attribute. It must respect the following type definition:
 
-### CSS parts and custom properties
+```ts
+// Keys must be YYYY-MM-DD date strings
+type ActivityGraphData = Record<string, ActivityGraphDataEntry>;
+
+interface ActivityGraphDataEntry {
+  // Used for the day "cell" inner text
+  text?: string;
+  // Used for the day "cell" `title` attribute, for tooltips and accessibility
+  title?: string;
+  // Used for the day "cell" `part` attribute, as in CSS shadow part for styling purposes
+  parts?: Array<string>;
+}
+```
+
+Here's an example:
+
+```js
+myActivityGraph.data = {
+  '2024-04-01': {
+    title: '2 contributions',
+    parts: ['level-1'],
+  },
+  '2024-04-04': {
+    title: '27 contributions',
+    parts: ['level-4'],
+  },
+};
+```
+
+### Styling
 
 By default, the component does not have any styles.
-You'll have to rely on the different CSS parts and custom properties to style it as you want.
+You'll have to rely on the different CSS parts and custom properties to create a theme.
 
-TODO link to theme examples
+> [!NOTE]
+>
+> - You can rely on the fact that the element has a `display: grid` and use properties like `gap` directly on it.
+> - You can have a look at the demos and their respective themes to get some ideas on how to style the component.
 
-| Part                   | Description |
-| ---------------------- | ----------- |
-| `weekday-header`       | TODO        |
-| `weekday-header--even` | TODO        |
-| `weekday-header--odd`  | TODO        |
-| `month-header`         | TODO        |
-| `day`                  | TODO        |
+#### CSS parts
 
-| Property                          | Description |
-| --------------------------------- | ----------- |
-| `var(--activity-graph-month-gap)` | TODO        |
+| Part                   | Description                          |
+| ---------------------- | ------------------------------------ |
+| `weekday-header`       | Target any weekday header            |
+| `weekday-header--even` | Target even numbered weekday headers |
+| `weekday-header--odd`  | Target odd numbered weekday headers  |
+| `month-header`         | Target any month header              |
+| `day`                  | Target any day "cell"                |
 
-NOTE: You can rely on the fact that the element has a `display: grid` and use properties like `gap` directly on it.
+> [!TIP]
+>
+> If you want to use a CSS shadow part, you'll need the `::part()` pseudo element like this:
+>
+> ```css
+> activity-graph::part(month-header) {
+>   text-align: center;
+> }
+> ```
+
+#### Custom properties
+
+| Property                          | Description                                                 |
+| --------------------------------- | ----------------------------------------------------------- |
+| `var(--activity-graph-month-gap)` | Spacing between months, can be any CSS unit, `0` by default |
 
 ## Why this project?
 
@@ -151,7 +223,15 @@ It wasn't a simple problem to tackle but I had lots of fun working on this.
 
 ### Design decisions
 
-TODO (no lit, 1 simple CSS grid, no styles, under 1k, then lit...)
+I started the project as a vanilla Web Component, without any dependency.
+I guess I was wondering how small the final bundle would be, I achied something close to `1.6kb` (minified and compressed).
+My code was not that easy to read and I had no support for properties, just attributes.
+A few commits later, I quickly realized I was recreating a very dumb, verbose and unefficient version of [lit](https://lit.dev).
+That's when I decided to add lit as the only dependency.
+In the end, the component code + lit is `6.4kb` (minified and compressed).
+
+I wanted something based on CSS grids without any styles by default so that anyone could reuse it and apply their own theme.
+At first, you could specify some style properties on the data object but I replaced it with CSS shadow parts to maximize styling in the CSS.
 
 ### Other similar projects
 

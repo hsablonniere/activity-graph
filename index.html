@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" href="data:image/x-icon;," />
-    <title>activity-graph Web Component demo</title>
+    <title>activity-graph Web Component demos</title>
     <style>
       body {
         font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
@@ -15,6 +15,14 @@
     <link rel="stylesheet" href="themes/serializd.css" />
     <link rel="stylesheet" href="themes/monkeytype.css" />
     <link rel="stylesheet" href="themes/letterboxd.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://esm.sh/lit@3.2.0",
+          "lit/": "https://esm.sh/lit@3.2.0/"
+        }
+      }
+    </script>
     <script type="module" src="./src/activity-graph.js"></script>
     <script type="module">
       const githubContributions = await fetch('./data/github-contributions.json').then((r) => r.json());
@@ -33,7 +41,7 @@
   <body>
     <h1>
       <code style="background-color: #eee; padding: 0.1em 0.25em; border-radius: 0.25em">&lt;activity-graph&gt;</code>
-      Web component demo
+      Web component demos
     </h1>
 
     <h2>2023 GitHub contributions</h2>
